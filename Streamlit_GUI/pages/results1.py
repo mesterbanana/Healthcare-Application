@@ -57,7 +57,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.page_link("app.py", label="Home Page", icon="🏠")
+st.page_link("app.py", label="Home", icon="🏠")
 
 
 
