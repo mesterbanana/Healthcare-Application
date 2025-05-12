@@ -284,8 +284,8 @@ try:
     results_array = convert(results)
     
     try:
-        model = joblib.load('Dermatology_Model/model.pkl')
-        le = joblib.load('Dermatology_Model/label_encoder.pkl')
+        model = joblib.load('Streamlit_GUI/Dermatology_Model/model.pkl')
+        le = joblib.load('Streamlit_GUI/Dermatology_Model/label_encoder.pkl')
         
         results_array = np.array([results_array])
         prediction = model.predict(results_array)
