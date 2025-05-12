@@ -270,8 +270,8 @@ try:
     results = st.session_state['ans']
     
     try:
-        model = joblib.load('Mental_Model/model.pkl')
-        le = joblib.load('Mental_Model/label_encoder.pkl')
+        model = joblib.load('Streamlit_GUI/Mental_Model/model.pkl')
+        le = joblib.load('Streamlit_GUI/Mental_Model/label_encoder.pkl')
         
         prediction = model.predict(results)
         prediction = le.inverse_transform(prediction)
