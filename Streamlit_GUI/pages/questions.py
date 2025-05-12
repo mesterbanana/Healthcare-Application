@@ -369,11 +369,12 @@ if q["type"] == "radio":
         st.session_state[q["key"]] = q["options"][0]
     
     response = st.radio(
-        "", 
+        " ",
         q["options"], 
         index=q["options"].index(st.session_state[q["key"]]), 
         key=q["key"],
-        help=q.get("help", "")
+        help=q.get("help", ""),
+        label_visibility="collapsed"
     )
 
 elif q["type"] == "number":
@@ -381,13 +382,14 @@ elif q["type"] == "number":
         st.session_state[q["key"]] = None
     
     response = st.number_input(
-        label="",
+        " ",
         min_value=q.get("min", 0),
         max_value=q.get("max", None),
         value=st.session_state[q["key"]] if st.session_state[q["key"]] is not None else None,
         placeholder=q.get("placeholder", ""),
         key=q["key"],
-        help=q.get("help", "")
+        help=q.get("help", ""),
+        label_visibility="collapsed"
     )
 
 if response is not None:
