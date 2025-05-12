@@ -279,15 +279,25 @@ st.markdown("<hr class='divider'>", unsafe_allow_html=True)
 try:
     results = st.session_state['ans']
     results_array = convert(results)
+    condition = results_array.copy()
+    condition[2] = 0
+
     
     try:
         model = joblib.load('Streamlit_GUI/Dermatology_Model/model.pkl')
         le = joblib.load('Streamlit_GUI/Dermatology_Model/label_encoder.pkl')
-        
-        results_array = np.array([results_array])
-        prediction = model.predict(results_array)
-        prediction = le.inverse_transform(prediction)
-        prediction = prediction[0]
+        is_normal = True
+        for i in range(len(condition)):
+            if condition[i] != 0:
+                is_normal= False
+                break
+        if not is_normal:    
+            results_array = np.array([results_array])
+            prediction = model.predict(results_array)
+            prediction = le.inverse_transform(prediction)
+            prediction = prediction[0]
+        else:
+            prediction = "Normal"
     except Exception as e:
         st.markdown(
             f"""
@@ -314,10 +324,10 @@ try:
     
     if api_key:
         user_question = (
-            f"Act as a Dermatology assistant. Explain well {prediction} in a summarized way. "
+            f"Act as a Dermatology assistant. Explain well {prediction} in a summarized way. if i ask you to explain Normal say staff to stay healthy and avoid dermatology diseases."
             f"Write as a paragraph. After the paragraph, write a separate recommendation on how "
             f"the {prediction} could be cured or improved for the patient. Also, provide official "
-            f"one clean link that are related to the {prediction} at the end of response "
+            f"one clean link (each on a new line) that are related to the {prediction} at the end of response "
             f"& make it accessible. Don't write titles or ask for additional input."
         )
         
