@@ -48,6 +48,8 @@ def set_bg_image(image_path: str):
 
 set_bg_image("Streamlit_GUI/GUI Page Images/computer-1149148_1920.jpg")
 
+
+
 st.page_link("app.py", label="Home", icon="🏠")
 
 st.markdown("""
@@ -343,25 +345,109 @@ st.markdown("""
 st.markdown("<h1 class='main-heading'>Health Diagnosis System</h1>", unsafe_allow_html=True)
 st.markdown("<hr class='divider'>", unsafe_allow_html=True)
 
-st.markdown("""
-<div class="welcome-message">
-    Welcome to the Health Diagnosis System! Select an option below to get started.
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    "<div class='welcome-message'>"
+    "Welcome to the <strong>Health Diagnosis System</strong>, designed to help medical professionals assess and predict potential health conditions! "
+    "<br><br><span style='font-size:0.9rem;'>Developed by Group 31 ML Team | Version Vbeta</span>"
+    "</div>",
+    unsafe_allow_html=True
+)
 
-with st.spinner("Loading..."):
-    if st.button("Start Dermatology Diagnosis", use_container_width=True):
-        st.session_state["last_page"] = "pages/streamlit.py"
+st.markdown("<div class='explanation-box'>"
+            "<div class='explanation-title'>How Our Predictors Work</div>"
+            "<div class='explanation-content'>"
+            "<p>Our Health Diagnosis System utilizes state-of-the-art machine learning models trained on comprehensive medical datasets. "
+            "These models have been developed in collaboration with medical professionals to ensure clinical relevance and accuracy.</p>"
+            "<div class='step-container'>"
+            "<div class='step-item'>"
+            "<div class='step-number'>1</div>"
+            "<div class='step-content'><strong>Data Collection</strong>: The system collects relevant patient data through standardized questionnaires and clinical observations.</div>"
+            "</div>"
+            "<div class='step-item'>"
+            "<div class='step-number'>2</div>"
+            "<div class='step-content'><strong>Feature Extraction</strong>: Our algorithms identify key clinical indicators and patterns from the input data.</div>"
+            "</div>"
+            "<div class='step-item'>"
+            "<div class='step-number'>3</div>"
+            "<div class='step-content'><strong>Model Processing</strong>: The data is processed through our trained machine learning models that have been validated against clinical standards.</div>"
+            "</div>"
+            "<div class='step-item'>"
+            "<div class='step-number'>4</div>"
+            "<div class='step-content'><strong>Prediction Generation</strong>: The system generates predictions with confidence scores based on pattern recognition.</div>"
+            "</div>"
+            "<div class='step-item'>"
+            "<div class='step-number'>5</div>"
+            "<div class='step-content'><strong>Clinical Review</strong>: Medical professionals review the predictions alongside their clinical judgment.</div>"
+            "</div>"
+            "</div>"
+            "<p>Our models are regularly updated with the latest medical research and clinical findings to maintain high accuracy and relevance.</p>"
+            "</div>"
+            "</div>", unsafe_allow_html=True)
+
+
+
+def navigate_to_page(page_name):
+    st.session_state.last_page = page_name
+    if page_name == "physical_diagnosishome":
         st.switch_page("pages/streamlit.py")
-    elif st.button("Start Cardiology Diagnosis", use_container_width=True):
-        st.session_state["last_page"] = "pages/streamlit1.py"
+    elif page_name == "mental_health":
         st.switch_page("pages/streamlit1.py")
 
-st.markdown("<hr class='divider'>", unsafe_allow_html=True)
+col1, col2 = st.columns(2)
 
-# Add footer section
-st.markdown("""
-<div class="custom-footer">
-    &copy; 2025 Health Diagnosis System | All Rights Reserved.
-</div>
-""", unsafe_allow_html=True)
+with col1:
+    st.markdown("""
+    <div style="padding: 20px; background-color: rgba(255, 255, 255, 0.9); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 15px; border-top: 5px solid #2E8B57;">
+        <div style="font-size: 35px; text-align: center; margin-bottom: 10px;">🧬</div>
+        <h3 style="text-align: center; color: #2E8B57; font-size: 1.5rem;">Dermatology Disease Predictor</h3>
+        <p style="text-align: center; margin-bottom: 15px;">
+            Our Dermatology Disease Predictor utilizes advanced machine learning algorithms to analyze clinical symptoms and patient history
+            to identify potential skin conditions with high accuracy.
+        </p>
+        <div style="text-align: center; margin-bottom: 10px;">
+            <span class="feature-badge">Symptom Analysis</span>
+            <span class="feature-badge">ML Powered</span>
+            <span class="feature-badge">Fast Results</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("Start Dermatology Diagnosis", use_container_width=True):
+        st.switch_page("pages/streamlit.py")
+
+with col2:
+    st.markdown("""
+    <div style="padding: 20px; background-color: rgba(255, 255, 255, 0.9); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 15px; border-top: 5px solid #2E8B57;">
+        <div style="font-size: 35px; text-align: center; margin-bottom: 10px;">🧠</div>
+        <h3 style="text-align: center; color: #2E8B57; font-size: 1.5rem;">Mental Health Assessment</h3>
+        <p style="text-align: center; margin-bottom: 15px;">
+            Complete a comprehensive assessment to identify potential mental health concerns based on validated clinical scales and receive
+            personalized guidance based on patient responses.
+        </p>
+        <div style="text-align: center; margin-bottom: 10px;">
+            <span class="feature-badge">Comprehensive</span>
+            <span class="feature-badge">Personalized</span>
+            <span class="feature-badge">Evidence-based</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("Start Mental Health Assessment", key="mental_btn", use_container_width=True):
+        st.switch_page("pages/streamlit1.py")
+
+st.markdown(
+    "<div class='important-note'>"
+    "⚠️ <strong>Important:</strong> This tool is designed to assist medical professionals and should not replace proper medical diagnosis. "
+    "Always use your clinical judgment when interpreting results. The system predictions are based on patterns identified "
+    "in clinical data and should be considered as supportive information only."
+    "</div>",
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    "<div class='custom-footer'>"
+    "© 2025 Health Diagnosis System | Powered by Group 31 ML Team<br>"
+    "<small>This system complies with healthcare data privacy regulations</small>"
+    "</div>",
+    unsafe_allow_html=True
+)
