@@ -215,12 +215,14 @@ st.markdown("""
         background-color: rgba(255, 255, 255, 0.7);
         border-radius: 0 0 15px 15px;
     }
-    
+
+    '''
     [data-testid="baseButton-secondary"] {
         visibility: hidden;
         height: 0px;
         margin-top: -50px;
     }
+    '''
     
     .feature-badge {
         display: inline-block;
