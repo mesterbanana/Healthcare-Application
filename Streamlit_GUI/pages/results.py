@@ -317,7 +317,7 @@ try:
             f"Act as a Dermatology assistant. Explain well {prediction} in a summarized way. "
             f"Write as a paragraph. After the paragraph, write a separate recommendation on how "
             f"the {prediction} could be cured or improved for the patient. Also, provide official "
-            f"one clean link (each on a new line) that are related to the {prediction} at the end of response "
+            f"one clean link only one that are related to the {prediction} at the end of response "
             f"& make it accessible. Don't write titles or ask for additional input."
         )
         
