@@ -3,12 +3,13 @@ import base64
 from pathlib import Path
 
 PAGE_NAME = "app"
+
 if "last_page" not in st.session_state:
     st.session_state.last_page = None
-if "last_page" in st.session_state and st.session_state.last_page != PAGE_NAME:
-    for key in list(st.session_state.keys()):
-        if key != "last_page":
-            del st.session_state[key]  
+if st.session_state.last_page != PAGE_NAME:
+    keys_to_delete = [key for key in st.session_state.keys() if key != "last_page"]
+    for key in keys_to_delete:
+        del st.session_state[key]
 st.session_state.last_page = PAGE_NAME
 
 st.set_page_config(
@@ -19,28 +20,21 @@ st.set_page_config(
     menu_items={'Get Help': None, 'Report a bug': None, 'About': None}
 )
 
-
 def set_bg_image(image_path: str):
-    if Path(image_path).is_file():
-        raw = Path(image_path).read_bytes()
-        ext = Path(image_path).suffix.lstrip(".")
+    try:
+        path = Path(__file__).parent / image_path  # Safer for Streamlit Cloud
+        raw = path.read_bytes()
+        ext = path.suffix.lstrip(".")
         img_data = base64.b64encode(raw).decode()
         img_url = f"data:image/{ext};base64,{img_data}"
-    else:
-        img_url = image_path 
+    except Exception:
+        img_url = image_path  # fallback if path not found or error
 
     css = f"""
     <style>
       [data-testid="stAppViewContainer"] {{
         background: url("{img_url}") no-repeat center center fixed;
         background-size: cover;
-      }}
-      [data-testid="stAppViewContainer"] .css-1outpf7,
-      .css-1d391kg {{
-        background: transparent;
-      }}
-      [data-testid="stSidebar"] {{
-        background: none;
       }}
     </style>
     """
@@ -391,7 +385,7 @@ st.markdown("<div class='explanation-box'>"
 def navigate_to_page(page_name):
     st.session_state.last_page = page_name
     if page_name == "physical_diagnosishome":
-        st.switch_page("pages/streamlit.py")
+        st.switch_page("pages/streamlit.py") 
     elif page_name == "mental_health":
         st.switch_page("pages/streamlit1.py")
 
