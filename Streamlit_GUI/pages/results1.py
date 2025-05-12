@@ -409,7 +409,7 @@ try:
             for key in list(st.session_state.keys()):
                 if key != "last_page":
                     del st.session_state[key]
-            st.switch_page("Streamlit_GUI/pages/streamlit1.py")
+            st.switch_page("pages/streamlit1.py")
 
 except Exception as e:
     st.markdown(
@@ -425,4 +425,4 @@ except Exception as e:
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         if st.button("Return to Home", use_container_width=True):
-            st.switch_page("Streamlit_GUI/pages/streamlit1.py")
+            st.switch_page("pages/streamlit1.py")
