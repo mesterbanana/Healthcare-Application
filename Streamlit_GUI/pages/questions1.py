@@ -2,9 +2,11 @@ import streamlit as st
 import base64
 import time
 import os
+from transformers import pipeline  # For text analysis model
 
 PAGE_NAME = "questions1"
 
+# Session state management
 if "last_page" not in st.session_state:
     st.session_state.last_page = None
 
@@ -15,6 +17,7 @@ if "last_page" in st.session_state and st.session_state.last_page != PAGE_NAME:
             
 st.session_state.last_page = PAGE_NAME
 
+# Page configuration
 st.set_page_config(
     page_title="Mental Disorder Prediction System",
     page_icon="🧠",
@@ -23,11 +26,11 @@ st.set_page_config(
     menu_items={'Get Help': None, 'Report a bug': None, 'About': None}
 )
 
+# Custom CSS styles
 st.markdown("""
     <style>
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* Hide default Streamlit elements */
+    #MainMenu, header, footer {visibility: hidden;}
     
     section[data-testid="stSidebar"] {
         display: none !important;
@@ -39,6 +42,7 @@ st.markdown("""
         visibility: hidden !important;
     }
     
+    /* Text and input styling */
     body, p, div, span, li, h1, h2, h3, h4, h5, h6,
     .stMarkdown, .stText,
     .stButton, .stSelectbox, .stMultiselect,
@@ -50,13 +54,18 @@ st.markdown("""
         color: #000000 !important;
     }
     
-    .stTextInput label, .stTextInput div, .stTextInput p {
-        color: #000000 !important;
+    /* Text input specific styling */
+    .stTextInput>div>div>input {
+        color: #333333 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #cccccc !important;
+        padding: 10px !important;
+        border-radius: 5px !important;
     }
     
-    input[type="text"] {
-        color: #FFFFFF !important;
-        background-color: #333333 !important;
+    .stTextInput>div>div>input:focus {
+        border-color: #2E8B57 !important;
+        box-shadow: 0 0 0 2px rgba(46, 139, 87, 0.2) !important;
     }
     
     .css-1adrfps p {
@@ -66,10 +75,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Home link
 st.page_link("app.py", label="Home", icon="🏠")
 
+# Helper functions
 def loader():
-    with st.spinner('Loading...'):
+    with st.spinner('Analyzing your response...'):
         time.sleep(1)
 
 def add_bg_from_local(image_file):
@@ -113,6 +124,7 @@ def add_bg_from_local(image_file):
             unsafe_allow_html=True
         )
 
+# Load background image
 try:
     add_bg_from_local("Streamlit_GUI/GUI Page Images/anxiety-2902575_1920.jpg")
 except:
@@ -127,24 +139,26 @@ except:
         unsafe_allow_html=True
     )
 
-st.markdown("<h1 style='color: #000000; font-family: Arial; text-align: center;'>Mental Disorders Prediction System</h1>", unsafe_allow_html=True)
+# Main title
+st.markdown("<h1 style='color: #000000; font-family: Arial; text-align: center;'>Mental Health Assessment</h1>", unsafe_allow_html=True)
 
+# Additional styling
 st.markdown(
     """
     <style>
     .question-container {
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 0.95);
         padding: 25px;
-        margin: 0px auto;
-        max-width: 2600px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: 20px auto;
+        max-width: 800px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
     
     .shaker-container {
         background-color: rgba(255, 255, 255, 0.9);
-        padding: 10px;
-        margin: 10px auto;
+        padding: 15px;
+        margin: 15px auto;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
@@ -154,36 +168,33 @@ st.markdown(
         color: white !important;
         font-size: 18px;
         font-weight: bold;
-        padding: 0.5em 1.2em;
+        padding: 12px 24px;
         border-radius: 8px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.3s ease;
         border: none;
         box-shadow: 0px 3px 6px rgba(0,0,0,0.15);
+        width: 100%;
+        margin-top: 20px;
     }
 
     .stButton>button:hover {
-        transform: scale(1.02);
+        transform: translateY(-2px);
         box-shadow: 0px 5px 12px rgba(0,0,0,0.2);
-        cursor: pointer;
+        background-color: #3CB371;
     }
     
     .stButton>button:active {
-        transform: scale(0.98);
-    }
-    
-    .stTextInput div, .stTextInput label, .stTextInput p {
-        color: #000000 !important;
-        font-size: 16px !important;
+        transform: translateY(0);
     }
     
     .error-message {
         color: #ff4b4b;
         font-weight: bold;
         font-size: 16px;
-        padding: 10px;
+        padding: 12px;
         background-color: rgba(255, 75, 75, 0.1);
-        border-radius: 5px;
-        margin: 10px 0;
+        border-radius: 8px;
+        margin: 15px 0;
         border-left: 4px solid #ff4b4b;
     }
     
@@ -191,106 +202,167 @@ st.markdown(
         font-size: 14px;
         color: #555555;
         font-style: italic;
-        margin-top: 5px;
-        margin-bottom: 15px;
+        margin-top: 8px;
+        margin-bottom: 20px;
+        line-height: 1.5;
     }
     
     .stProgress > div > div {
         background-color: #4CAF50 !important;
+        height: 8px !important;
+        border-radius: 4px !important;
+    }
+    
+    .privacy-note {
+        font-size: 12px;
+        color: #666666;
+        text-align: center;
+        margin-top: 20px;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
+# Load the mental health analysis model
+@st.cache_resource
+def load_model():
+    try:
+        # Using a pre-trained model from Hugging Face
+        return pipeline("text-classification", model="mental-health-classifier")
+    except Exception as e:
+        st.error(f"Could not load the analysis model: {str(e)}")
+        return None
+
+model = load_model()
+
+# Question setup
 questions = [
-  {
-    "key": "mental_state",
-    "text": "Express your current feelings and what you are going through in your life (Please be honest and open)",
-    "type": "text",
-    "placeholder": "Enter your thoughts here...",
-    "help": "This is a free text field. Please provide a detailed description of your current mental state."
-  }
+    {
+        "key": "mental_state",
+        "text": "Please describe your current feelings and what you're experiencing in your life",
+        "type": "text",
+        "placeholder": "I've been feeling...",
+        "help": "Be as detailed as you're comfortable with. This helps us better understand your mental state. Your response is confidential.",
+        "min_length": 30,
+        "max_length": 1000
+    }
 ]
 
+# Initialize session state
 if "question_index" not in st.session_state:
     st.session_state.question_index = 0
 
 if "responses" not in st.session_state:
     st.session_state.responses = {}
 
-def prev_question():
-    if st.session_state.question_index > 0:
-        st.session_state.question_index -= 1
-
-def next_question():
-    pass
+# Form submission functions
+def validate_response(response, question):
+    if len(response.strip()) < question.get("min_length", 30):
+        return f"Please provide more details (at least {question['min_length']} characters)"
+    if len(response.strip()) > question.get("max_length", 1000):
+        return f"Please keep your response under {question['max_length']} characters"
+    return None
 
 def submit_form():
-    st.session_state['form_valid'] = True
-    
     current_q = questions[st.session_state.question_index]
     key = current_q["key"]
-    val = st.session_state[key]
+    val = st.session_state.get(key, "").strip()
     
-    if val == "":
+    # Validate response
+    error = validate_response(val, current_q)
+    if error:
         st.session_state['form_valid'] = False
-        st.session_state['error_message'] = "Please provide an answer before submitting."
+        st.session_state['error_message'] = error
         return
-    else:
-        st.session_state.responses[key] = val
     
-    st.session_state['ans'] = [st.session_state.responses[key]]
+    # Store response
+    st.session_state.responses[key] = val
+    
+    # Analyze the response if model is available
+    if model:
+        try:
+            with st.spinner("Analyzing your response..."):
+                analysis = model(val)
+                st.session_state['analysis_result'] = analysis
+        except Exception as e:
+            st.error(f"Analysis failed: {str(e)}")
+            st.session_state['analysis_result'] = None
     
     st.session_state['ready_to_switch'] = True
 
+# Display current question
 idx = st.session_state.question_index
 q = questions[idx]
 
+# Progress bar (shows full since there's only one question)
 st.progress(1.0)
 
-st.markdown('<div class="question-container">' \
-    '<div style="display: flex; justify-content: space-between;">'
-        '<h2 style="font-family: Arial; color: black;">Mental Disorders Assessment</h2>'
-        '<h3 style="font-family: Arial; margin-top: 5px; margin-bottom: 0px; color: black;">Question 1 of 1</h3>'
-    '</div>', unsafe_allow_html=True)
+# Question container
+with st.container():
+    st.markdown(
+        f"""
+        <div class="question-container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="font-family: Arial; color: black; margin-bottom: 0;">Mental Health Assessment</h2>
+                <h3 style="font-family: Arial; color: black; margin: 0;">Question {idx + 1} of {len(questions)}</h3>
+            </div>
+            <h4 style='color: black; margin-top: 20px; font-family: Arial;'>{q['text']}</h4>
+        """,
+        unsafe_allow_html=True
+    )
 
-st.markdown(f"<h4 style='color: black; margin-left: 10px; margin-top: 20px; font-family: Arial;'>{q['text']}</h4>", unsafe_allow_html=True)
+    # Initialize response in session state if not exists
+    if q["key"] not in st.session_state:
+        st.session_state[q["key"]] = ""
 
-if q["key"] not in st.session_state:
-    st.session_state[q["key"]] = ""
+    # Display appropriate input based on question type
+    if q["type"] == "text":
+        response = st.text_area(
+            label=" ",
+            value=st.session_state[q["key"]],
+            placeholder=q.get("placeholder", ""),
+            key=q["key"],
+            height=200
+        )
+    else:
+        st.error("Unsupported question type")
 
-response = st.text_input(
-    label="",
-    value=st.session_state[q["key"]],
-    placeholder=q.get("placeholder", ""),
-    key=q["key"]
+    # Help text
+    st.markdown(f"<div class='helper-text'>{q.get('help', '')}</div>", unsafe_allow_html=True)
+    
+    # Privacy note
+    st.markdown(
+        """<div class="privacy-note">
+        Your responses are confidential and will only be used for this assessment.
+        </div>""",
+        unsafe_allow_html=True
+    )
+
+    # Store response
+    if response is not None:
+        st.session_state.responses[q["key"]] = response
+
+# Error handling
+if 'form_valid' in st.session_state and not st.session_state['form_valid']:
+    st.markdown(
+        f'<div class="shaker-container"><p class="error-message">{st.session_state["error_message"]}</p></div>',
+        unsafe_allow_html=True
+    )
+    st.session_state['form_valid'] = True  # Reset for next attempt
+
+# Submit button
+st.button(
+    "Submit Assessment",
+    on_click=submit_form,
+    type="primary",
+    use_container_width=True
 )
 
-st.markdown(f"<div class='helper-text'>{q.get('help', '')}</div>", unsafe_allow_html=True)
+# Close question container
+st.markdown('</div>', unsafe_allow_html=True)
 
-if response is not None:
-    st.session_state.responses[q["key"]] = response
-
-if 'ready_to_switch' not in st.session_state:
-    st.session_state['ready_to_switch'] = False
-
-if 'form_valid' not in st.session_state:
-    st.session_state['form_valid'] = True
-    
-if 'error_message' not in st.session_state:
-    st.session_state['error_message'] = ""
-
-if not st.session_state['form_valid']:
-    st.markdown(f'<div class="shaker-container"><p class="error-message">{st.session_state["error_message"]}</p></div>', unsafe_allow_html=True)
-    st.session_state['form_valid'] = True
-
-if st.session_state['ready_to_switch']:
+# Page navigation
+if 'ready_to_switch' in st.session_state and st.session_state['ready_to_switch']:
     st.session_state['ready_to_switch'] = False
     st.switch_page("pages/results1.py")
-
-st.markdown('<div class="button-container" style="margin-top: 30px;">', unsafe_allow_html=True)
-
-st.button("Submit", on_click=submit_form, use_container_width=True)
-
-st.markdown('</div></div>', unsafe_allow_html=True)
