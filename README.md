@@ -1,1 +1,1 @@
-#Apllication is protected by license
+Application is protected by a license
