@@ -402,7 +402,7 @@ with col1:
         <h3 style="text-align: center; color: #2E8B57; font-size: 1.5rem;">Dermatology Disease Predictor</h3>
         <p style="text-align: center; margin-bottom: 15px;">
             Our Dermatology Disease Predictor utilizes advanced machine learning algorithms to analyze clinical symptoms and patient history
-            to identify potential skin conditions with high accuracy.
+            to identify potential skin conditions with high accuracy (for medical staff only).
         </p>
         <div style="text-align: center; margin-bottom: 10px;">
             <span class="feature-badge">Symptom Analysis</span>
@@ -422,7 +422,7 @@ with col2:
         <h3 style="text-align: center; color: #2E8B57; font-size: 1.5rem;">Mental Health Assessment</h3>
         <p style="text-align: center; margin-bottom: 15px;">
             Complete a comprehensive assessment to identify potential mental health concerns based on validated clinical scales and receive
-            personalized guidance based on patient responses.
+            personalized guidance based on patient responses (for all users).
         </p>
         <div style="text-align: center; margin-bottom: 10px;">
             <span class="feature-badge">Comprehensive</span>
