@@ -322,8 +322,11 @@ def next_question():
         st.session_state['error_message'] = "Please select an option before continuing."
     elif current_q["type"] == "number" and (val is None or val < 0 or (current_q.get("max") and val > current_q.get("max"))):
         st.session_state['form_valid'] = False
-        st.session_state['error_message'] = f"Please enter a valid number between {current_q.get("min", 0)} and {current_q.get("max", '∞')}
-
+        st.session_state['error_message'] = f"Please enter a valid number between {current_q.get('min', 0)} and {current_q.get('max', '∞')}."
+    else:
+        st.session_state.responses[key] = val
+        if st.session_state.question_index < len(questions) - 1:
+            st.session_state.question_index += 1
 
 def submit_form():
     st.session_state['form_valid'] = True
