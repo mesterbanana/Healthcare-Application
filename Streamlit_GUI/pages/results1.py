@@ -103,7 +103,7 @@ def add_bg_from_local(image_file):
         )
 
 try:
-    add_bg_from_local("Streamlit_GUI/GUI Page Images/7816782.jpg")
+    add_bg_from_local("Streamlit_GUI/GUI Page Images/anxiety-2902575_1920.jpg")
 except:
     st.markdown(
         """
