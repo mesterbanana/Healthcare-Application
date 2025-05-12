@@ -287,7 +287,7 @@ if not st.session_state['form_valid']:
 
 if st.session_state['ready_to_switch']:
     st.session_state['ready_to_switch'] = False
-    st.switch_page("Streamlit_GUI/pages/results1.py")
+    st.switch_page("pages/results1.py")
 
 st.markdown('<div class="button-container" style="margin-top: 30px;">', unsafe_allow_html=True)
 
