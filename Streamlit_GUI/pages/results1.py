@@ -305,7 +305,7 @@ try:
             f"Explain well {prediction} in a summarized way. "
             f"Write as a paragraph. After the paragraph, write a separate recommendation on how "
             f"the {prediction} could be cured or improved for the patient. Also, provide official "
-            f"only one clean link only one that are related to the {prediction} at the end of response "
+            f"only one clean link that are related to the {prediction} at the end of response "
             f"& make it accessible. Don't write titles or ask for additional input."
         )
         
