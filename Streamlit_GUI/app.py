@@ -351,10 +351,10 @@ st.markdown("""
 
 with st.spinner("Loading..."):
     if st.button("Start Dermatology Diagnosis", use_container_width=True):
-        st.session_state["last_page"] = "streamlit.py"
+        st.session_state["last_page"] = "pages/streamlit.py"
         st.switch_page("streamlit.py")
     elif st.button("Start Cardiology Diagnosis", use_container_width=True):
-        st.session_state["last_page"] = "streamlit1.py"
+        st.session_state["last_page"] = "pages/streamlit1.py"
         st.switch_page("streamlit1.py")
 
 st.markdown("<hr class='divider'>", unsafe_allow_html=True)
