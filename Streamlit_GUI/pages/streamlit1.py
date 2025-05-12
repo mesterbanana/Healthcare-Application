@@ -57,7 +57,7 @@ st.markdown("""
 st.page_link("app.py", label="Home", icon="🏠")
 
 def start_button_action():
-    st.switch_page("Streamlit_GUI/pages/questions1.py")
+    st.switch_page("pages/questions1.py")
 
 def add_bg_from_local(image_file):
     try:
