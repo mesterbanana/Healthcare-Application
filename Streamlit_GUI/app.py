@@ -3,13 +3,12 @@ import base64
 from pathlib import Path
 
 PAGE_NAME = "app"
-
 if "last_page" not in st.session_state:
     st.session_state.last_page = None
-if st.session_state.last_page != PAGE_NAME:
-    keys_to_delete = [key for key in st.session_state.keys() if key != "last_page"]
-    for key in keys_to_delete:
-        del st.session_state[key]
+if "last_page" in st.session_state and st.session_state.last_page != PAGE_NAME:
+    for key in list(st.session_state.keys()):
+        if key != "last_page":
+            del st.session_state[key]  
 st.session_state.last_page = PAGE_NAME
 
 st.set_page_config(
@@ -19,6 +18,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
     menu_items={'Get Help': None, 'Report a bug': None, 'About': None}
 )
+
 
 def set_bg_image(image_path: str):
     if Path(image_path).is_file():
@@ -215,14 +215,12 @@ st.markdown("""
         background-color: rgba(255, 255, 255, 0.7);
         border-radius: 0 0 15px 15px;
     }
-
-    '''
+    
     [data-testid="baseButton-secondary"] {
         visibility: hidden;
         height: 0px;
         margin-top: -50px;
     }
-    '''
     
     .feature-badge {
         display: inline-block;
@@ -391,7 +389,7 @@ st.markdown("<div class='explanation-box'>"
 def navigate_to_page(page_name):
     st.session_state.last_page = page_name
     if page_name == "physical_diagnosishome":
-        st.switch_page("pages/streamlit.py") 
+        st.switch_page("pages/streamlit.py")
     elif page_name == "mental_health":
         st.switch_page("pages/streamlit1.py")
 
