@@ -389,9 +389,9 @@ st.markdown("<div class='explanation-box'>"
 def navigate_to_page(page_name):
     st.session_state.last_page = page_name
     if page_name == "physical_diagnosishome":
-        st.switch_page("Streamlit_GUI/pages/streamlit.py")
+        st.switch_page("pages/streamlit.py")
     elif page_name == "mental_health":
-        st.switch_page("Streamlit_GUI/pages/streamlit1.py")
+        st.switch_page("pages/streamlit1.py")
 
 col1, col2 = st.columns(2)
 
@@ -413,7 +413,7 @@ with col1:
     """, unsafe_allow_html=True)
     
     if st.button("Start Dermatology Diagnosis", use_container_width=True):
-        st.switch_page("Streamlit_GUI/pages/streamlit.py")
+        st.switch_page("pages/streamlit.py")
 
 with col2:
     st.markdown("""
@@ -433,7 +433,7 @@ with col2:
     """, unsafe_allow_html=True)
     
     if st.button("Start Mental Health Assessment", key="mental_btn", use_container_width=True):
-        st.switch_page("Streamlit_GUI/pages/streamlit1.py")
+        st.switch_page("pages/streamlit1.py")
 
 st.markdown(
     "<div class='important-note'>"
