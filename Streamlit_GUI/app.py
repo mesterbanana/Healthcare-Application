@@ -21,20 +21,26 @@ st.set_page_config(
 )
 
 def set_bg_image(image_path: str):
-    try:
-        path = Path(__file__).parent / image_path  # Safer for Streamlit Cloud
-        raw = path.read_bytes()
-        ext = path.suffix.lstrip(".")
+    if Path(image_path).is_file():
+        raw = Path(image_path).read_bytes()
+        ext = Path(image_path).suffix.lstrip(".")
         img_data = base64.b64encode(raw).decode()
         img_url = f"data:image/{ext};base64,{img_data}"
-    except Exception:
-        img_url = image_path  # fallback if path not found or error
+    else:
+        img_url = image_path 
 
     css = f"""
     <style>
       [data-testid="stAppViewContainer"] {{
         background: url("{img_url}") no-repeat center center fixed;
         background-size: cover;
+      }}
+      [data-testid="stAppViewContainer"] .css-1outpf7,
+      .css-1d391kg {{
+        background: transparent;
+      }}
+      [data-testid="stSidebar"] {{
+        background: none;
       }}
     </style>
     """
