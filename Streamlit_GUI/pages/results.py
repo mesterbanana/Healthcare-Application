@@ -365,7 +365,7 @@ try:
                             <h3 class="guidance-heading">Condition Information</h3>
                             <div class="api-content">
                                 <p>{description}</p>
-                            </div>
+                        </div>
                             
                         <div class="recommendation-section">
                             <h4 style="color: #2E8B57 !important;">Treatment Recommendations</h4>
